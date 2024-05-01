@@ -12,57 +12,118 @@
 
 # pip install this dependency if you don't have this already
 # pip install openai
-import openai
+#import openai
 
-# User-defined function go here, before the main() function (is a Python coding convention)
-def generate_response(user_input):
+from openai import OpenAI
+
+client = OpenAI(api_key="sk-proj-TQ6mmp976ftZn80PTQl4T3BlbkFJarSYX9mwxCtB76L8zeF4")
+
+def openai_chat(prompt, chat_log):
+    context_messages = [
+        {"role": "system", "content": """You are a gifted Python chatbot. You explain complex Python
+        concepts clearly using words that a college student would understand, and generate typical exam
+        questions that help the user with the Python final exam."""
+        },
+        {"role": "user", "content": "Explain recursion in C++ programming."}
+        ] + chat_log + [{"role": "user", "content": prompt}]
+    
     try:
-        # Call the OpenAI API to generate a response
-        completion = openai.ChatCompletion.create(
-            # Find the model pricing page at OpenAI and examine your token usage with different models.
+        completion = client.Chat.Completions.create(
             model="gpt-3.5-turbo",
-            messages=[{"role": "system", "content": "Assume the role of a Python teacher, and think step by step. Your name is Skippy Py."},
-                      {"role": "user", "content": user_input}]
+            messages=context_messages,
+            max_tokens=500
         )
-
-        # Extract the text of the response
-        response_text = completion['choices'][0]['message']['content']
+        response_text = completion.choices[0].message.content
         return response_text
+
     except Exception as e:
-        # Print an error message if the API call fails
-        print("Error generating response:", e)
-        return "I'm sorry, I couldn't generate a response."
+        return str(e), chat_log
 
-def main():
-    # This API key will not work (Because I deleted it after the video)
-    # Use your own from OpenAI (there is a cost for this, but it is not much if you do not deploy
-    # your app and have thousands of users) Typically, your API key will be in another Python file that
-    # GitHub will not fork when asked to download
-    # https://platform.openai.com/api-keys
-    openai.api_key = "sk-proj-TQ6mmp976ftZn80PTQl4T3BlbkFJarSYX9mwxCtB76L8zeF4"
+prompt = "What are the benefits of using Python for data analysis?"
+chat_log = []
+response = openai_chat(prompt, chat_log)
+print(response)
 
-    # Print a welcome message
-    print("\nWelcome to the Python Study Bot! Type 'quit' to exit.\n")
+# # User-defined function go here, before the main() function (is a Python coding convention)
+# def generate_response(user_input):
+#     try:
+#         # Call the OpenAI API to generate a response
+#         completion = openai.ChatCompletion.create(
+#             # Find the model pricing page at OpenAI and examine your token usage with different models.
+#             model="gpt-3.5-turbo",
+#             messages=[{"role": "system", "content": "Assume the role of a Python teacher, and think step by step. Your name is Skippy Py."},
+#                       {"role": "user", "content": user_input}]
+#         )
 
-    # This loop will run until the break after user input "quit"
-    while True:
-        # Get user input.
-        user_input = input("Python student question: ")
+#         # Extract the text of the response
+#         response_text = completion['choices'][0]['message']['content']
+#         return response_text
+#     except Exception as e:
+#         # Print an error message if the API call fails
+#         print("Error generating response:", e)
+#         return "I'm sorry, I couldn't generate a response."
 
-        # Check if user wants to quit the chatbot
-        if user_input.lower() == "quit":
-            print("Exiting Python Study Bot.")
-            break
+# def main():
+#     # This API key will not work (Because I deleted it after the video)
+#     # Use your own from OpenAI (there is a cost for this, but it is not much if you do not deploy
+#     # your app and have thousands of users) Typically, your API key will be in another Python file that
+#     # GitHub will not fork when asked to download
+#     # https://platform.openai.com/api-keys
+#     openai.api_key = ""
 
-        # Generate a response using OpenAI's GPT-3.5-turbo
-        response = generate_response(user_input)
+#     # Print a welcome message
+#     print("\nWelcome to the Python Study Bot! Type 'quit' to exit.\n")
 
-        # Print the response
-        print("Python Study Bot:", response)
+#     # This loop will run until the break after user input "quit"
+#     while True:
+#         # Get user input.
+#         user_input = input("Python student question: ")
 
-# Use this common Python idiom to check if your Python code is being run directly or being imported
-# as a module into another program. This tells your program to start in a function named "main()"
-# main() is not a reserved word in Python, but it is a standard convention and I suggest you use it
-# to not confuse your project coworkers.
-if __name__ == "__main__":
-    main()
+#         # Check if user wants to quit the chatbot
+#         if user_input.lower() == "quit":
+#             print("Exiting Python Study Bot.")
+#             break
+
+#         # Generate a response using OpenAI's GPT-3.5-turbo
+#         response = generate_response(user_input)
+
+#         # Print the response
+#         print("Python Study Bot:", response)
+
+# # Use this common Python idiom to check if your Python code is being run directly or being imported
+# # as a module into another program. This tells your program to start in a function named "main()"
+# # main() is not a reserved word in Python, but it is a standard convention and I suggest you use it
+# # to not confuse your project coworkers.
+# if __name__ == "__main__":
+#     main()
+
+
+# from openai import OpenAI
+
+# client = OpenAI(api_key="your api key here")
+
+# def openai_chat(prompt, chat_log):
+# context_messages = [
+# {"role": "system", "content": """You are a gifted Python chatbot. You explain complex Python
+# concepts clearly using words that a college student would understand, and generate typical exam
+# questions that help the user with the Python final exam."""
+# },
+# {"role": "user", "content": "Explain recursion in C++ programming."}
+# ] + chat_log + [{"role": "user", "content": prompt}]
+
+# try:
+# completion = client.Chat.Completions.create(
+# model="gpt-3.5-turbo",
+# messages=context_messages,
+# max_tokens=500
+# )
+# response_text = completion.choices[0].message.content
+# return response_text
+
+# except Exception as e:
+# return str(e), chat_log
+
+# prompt = "What are the benefits of using Python for data analysis?"
+# chat_log = []
+# response = openai_chat(prompt, chat_log)
+# print(response)
