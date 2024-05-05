@@ -25,20 +25,12 @@ def generate_response(user_input):
             model="gpt-3.5-turbo",
             messages=[{"role": "system", "content": "Assume the role of a Python teacher, and think step by step. Your name is Skippy Py."},
                       {"role": "user", "content": user_input}]
-            messages=[{"role": "system", "content": "Assume the role of a Python teacher, and think step by step. Your name is Skippy Py."},
-                      {"role": "user", "content": user_input}]
         )
-
-        # Extract the text of the response
-        response_text = completion['choices'][0]['message']['content']
 
         # Extract the text of the response
         response_text = completion['choices'][0]['message']['content']
         return response_text
     except Exception as e:
-        # Print an error message if the API call fails
-        print("Error generating response:", e)
-        return "I'm sorry, I couldn't generate a response."
         # Print an error message if the API call fails
         print("Error generating response:", e)
         return "I'm sorry, I couldn't generate a response."
@@ -53,13 +45,7 @@ def main():
 
     # Print a welcome message
     print("\nWelcome to the Python Study Bot! Type 'quit' to exit.\n")
-    # Print a welcome message
-    print("\nWelcome to the Python Study Bot! Type 'quit' to exit.\n")
 
-    # This loop will run until the break after user input "quit"
-    while True:
-        # Get user input.
-        user_input = input("Python student question: ")
     # This loop will run until the break after user input "quit"
     while True:
         # Get user input.
@@ -69,27 +55,13 @@ def main():
         if user_input.lower() == "quit":
             print("Exiting Python Study Bot.")
             break
-        # Check if user wants to quit the chatbot
-        if user_input.lower() == "quit":
-            print("Exiting Python Study Bot.")
-            break
 
-        # Generate a response using OpenAI's GPT-3.5-turbo
-        response = generate_response(user_input)
         # Generate a response using OpenAI's GPT-3.5-turbo
         response = generate_response(user_input)
 
         # Print the response
         print("Python Study Bot:", response)
-        # Print the response
-        print("Python Study Bot:", response)
 
-# Use this common Python idiom to check if your Python code is being run directly or being imported
-# as a module into another program. This tells your program to start in a function named "main()"
-# main() is not a reserved word in Python, but it is a standard convention and I suggest you use it
-# to not confuse your project coworkers.
-if __name__ == "__main__":
-    main()
 # Use this common Python idiom to check if your Python code is being run directly or being imported
 # as a module into another program. This tells your program to start in a function named "main()"
 # main() is not a reserved word in Python, but it is a standard convention and I suggest you use it
