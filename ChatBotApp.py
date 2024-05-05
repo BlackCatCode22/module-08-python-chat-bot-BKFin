@@ -14,11 +14,13 @@
 # pip install openai
 import openai
 
+from openai import OpenAI
+
 # User-defined function go here, before the main() function (is a Python coding convention)
 def generate_response(user_input):
     try:
         # Call the OpenAI API to generate a response
-        completion = openai.completions.create(
+        completion = openai.chat.completions.create(
             # Find the model pricing page at OpenAI and examine your token usage with different models.
             model="gpt-3.5-turbo",
             messages=[{"role": "system", "content": "Assume the role of a Python teacher, and think step by step. Your name is Skippy Py."},
@@ -39,7 +41,7 @@ def main():
     # your app and have thousands of users) Typically, your API key will be in another Python file that
     # GitHub will not fork when asked to download
     # https://platform.openai.com/api-keys
-    openai.api_key = "sk-proj-TQ6mmp976ftZn80PTQl4T3BlbkFJarSYX9mwxCtB76L8zeF4"
+    openai.api_key = "sk-proj-nv0Umded1IfystKFPzztT3BlbkFJXL9i06a3wdHtFn5LOFQ7"
 
     # Print a welcome message
     print("\nWelcome to the Python Study Bot! Type 'quit' to exit.\n")
